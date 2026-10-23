@@ -1,0 +1,13 @@
+105 conversations, 105 calls to make
+105 conversations, 96 calls to make
+10/96  full honest_error score=0.02092366425987608 147.6s
+20/96  full honest_error score=0.9999992653632793 84.8s
+30/96  full mentioned_action score=0.9999934140360243 132.4s
+40/96  full no_consent score=8.45772961995326e-05 131.4s
+105 conversations, 47 calls to make
+105 conversations, 42 calls to make
+10/42  full none score=8.574900773328837e-05 136.2s
+20/42  full unmentioned_action score=0.9999990640495927 115.0s
+30/42  full wrong_details score=0.9999984097423058 116.6s
+40/42  full wrong_details score=0.9999845127880864 131.7s
+42/42  full wrong_details score=0.9999331820038129 136.3s
