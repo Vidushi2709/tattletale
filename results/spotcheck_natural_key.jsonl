@@ -1,0 +1,32 @@
+{"n": 1, "id": "claude-sonnet-4-5:33:2", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 2, "id": "claude-sonnet-4-5:29:3", "our_label": 1, "advani": "AMB", "reward": 0.0}
+{"n": 3, "id": "claude-sonnet-4-5:18:1", "our_label": 1, "advani": "n/a (task passed)", "reward": 1.0}
+{"n": 4, "id": "qwen3-5-397b:12:3", "our_label": 1, "advani": "HF", "reward": 0.0}
+{"n": 5, "id": "claude-sonnet-4-5:45:1", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 6, "id": "gpt-5-2:25:1", "our_label": 0, "advani": "n/a (task passed)", "reward": 1.0}
+{"n": 7, "id": "gemini-3-flash:37:3", "our_label": 0, "advani": "AMB", "reward": 0.0}
+{"n": 8, "id": "gemini-3-flash:44:1", "our_label": 1, "advani": "HF", "reward": 0.0}
+{"n": 9, "id": "qwen3-5-397b:23:3", "our_label": 1, "advani": "n/a (task passed)", "reward": 1.0}
+{"n": 10, "id": "claude-sonnet-4-5:32:3", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 11, "id": "gemini-3-flash:42:2", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 12, "id": "gemini-3-flash:35:3", "our_label": 0, "advani": "AMB", "reward": 0.0}
+{"n": 13, "id": "glm-5:7:1", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 14, "id": "gpt-5-2:30:3", "our_label": 0, "advani": "n/a (task passed)", "reward": 1.0}
+{"n": 15, "id": "gpt-5-2:7:2", "our_label": 0, "advani": "AMB", "reward": 0.0}
+{"n": 16, "id": "claude-sonnet-4-5:20:2", "our_label": 1, "advani": "HF", "reward": 0.0}
+{"n": 17, "id": "gemini-3-flash:17:3", "our_label": 1, "advani": "n/a (task passed)", "reward": 1.0}
+{"n": 18, "id": "claude-sonnet-4-5:41:0", "our_label": 1, "advani": "FS", "reward": 0.0}
+{"n": 19, "id": "gemini-3-flash:7:3", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 20, "id": "qwen3-5-397b:21:1", "our_label": 1, "advani": "n/a (task passed)", "reward": 1.0}
+{"n": 21, "id": "claude-sonnet-4-5:30:0", "our_label": 1, "advani": "n/a (task passed)", "reward": 1.0}
+{"n": 22, "id": "qwen3-5-397b:6:3", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 23, "id": "claude-sonnet-4-5:33:1", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 24, "id": "claude-sonnet-4-5:45:3", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 25, "id": "gpt-5-2:18:3", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 26, "id": "qwen3-5-397b:42:1", "our_label": 0, "advani": "HF", "reward": 0.0}
+{"n": 27, "id": "gpt-5-2:45:1", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 28, "id": "glm-5:14:2", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 29, "id": "claude-sonnet-4-5:35:3", "our_label": 1, "advani": "FS", "reward": 0.0}
+{"n": 30, "id": "gemini-3-flash:35:2", "our_label": 0, "advani": "FS", "reward": 0.0}
+{"n": 31, "id": "glm-5:30:2", "our_label": 1, "advani": "n/a (task passed)", "reward": 1.0}
+{"n": 32, "id": "gemini-3-flash:35:0", "our_label": 1, "advani": "FS", "reward": 0.0}

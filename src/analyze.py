@@ -10,6 +10,7 @@ import sys
 from collections import defaultdict
 
 EVAL = pathlib.Path(__file__).resolve().parent.parent / "data" / "eval_set.jsonl"
+NATURAL = EVAL.with_name("natural_set.jsonl")  # Q4: unplanted mistakes, built by natural_set.py
 # a type can hold both labels (mentioned_action: paid bag = mismatch, certificate = clean)
 TYPES = ["false_success", "no_consent", "wrong_details", "unmentioned_action", "mentioned_action"]
 NEG_TYPES = ["none", "honest_error", "mentioned_action"]
@@ -75,7 +76,8 @@ def bootstrap(rows, seed=0):
 
 def load(path):
     # labels come from the eval set, not the run, so fixing a label never needs a rerun
-    labels = {r["id"]: r["label"] for r in map(json.loads, open(EVAL, encoding="utf-8"))}
+    labels = {r["id"]: r["label"] for p in (EVAL, NATURAL) if p.exists()
+              for r in map(json.loads, open(p, encoding="utf-8"))}
     by_view = defaultdict(dict)
     for line in open(path, encoding="utf-8"):
         d = json.loads(line)
