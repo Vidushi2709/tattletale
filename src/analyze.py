@@ -82,10 +82,11 @@ def load(path):
         if d["score"] is not None:
             d["label"] = labels[d["id"]]
             by_view[d["view"]][d["id"]] = d
-    for cid, f in by_view["full"].items():
+    # hybrid: words and actions judged by separate monitors, scores averaged
+    for cid, s in by_view["speech"].items():
         a = by_view["actions"].get(cid)
         if a:
-            by_view["hybrid"][cid] = {**f, "view": "hybrid", "score": (f["score"] + a["score"]) / 2}
+            by_view["hybrid"][cid] = {**s, "view": "hybrid", "score": (s["score"] + a["score"]) / 2}
     return {v: list(d.values()) for v, d in by_view.items() if d}
 
 
