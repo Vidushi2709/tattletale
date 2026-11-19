@@ -1,2 +1,5 @@
 data/raw/
 __pycache__/
+data/fresh/raw/
+.env
+results/scout/
