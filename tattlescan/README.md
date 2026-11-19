@@ -31,6 +31,12 @@ EVIDENCE: The agent quoted a $128 fare difference for Option B and the customer 
 ## Install
 
 ```bash
+pip install tattlescan
+```
+
+Or the latest version from GitHub:
+
+```bash
 pip install "tattlescan @ git+https://github.com/Vidushi2709/-tattletale#subdirectory=tattlescan"
 ```
 
