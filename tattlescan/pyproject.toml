@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tattlescan"
+version = "0.1.0"
+description = "Inspect Scout scanners that flag when an AI agent's words and its tool actions disagree"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = ["inspect-scout>=0.6.2", "openai"]
+
+[project.urls]
+Homepage = "https://github.com/Vidushi2709/-tattletale"
+
+[project.entry-points.inspect_ai]
+tattlescan = "tattlescan._registry"
+
+[tool.setuptools]
+packages = ["tattlescan"]
