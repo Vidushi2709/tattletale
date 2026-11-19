@@ -9,9 +9,12 @@ import sys
 from collections import Counter
 from datetime import date, timedelta
 
+from select_clean import labelled_amounts
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 IN = ROOT / "data" / "conversations.jsonl"
 OUT = ROOT / "data" / "eval_set.jsonl"
+OUT_AMOUNT = ROOT / "data" / "eval_wrong_amount.jsonl"
 
 PER_TYPE = 60
 SEED = 0
@@ -263,6 +266,45 @@ def plant_unmentioned_action(conv, rng, mention=False):
     return {"conv": out, "where": end, "edit": edit, "needs_consent": call["name"] in CONSENT_WRITES}
 
 
+def plant_wrong_amount(conv, rng):
+    """The agent quotes an amount and the customer agrees; the system charges or refunds a different one.
+    Only the tool result changes, the way real agents went wrong in 21 of 26 natural mismatches."""
+    msgs = conv["messages"]
+    s = slots(msgs)
+    if not s:
+        return None
+    options, seen = [], {}
+    for x in s:
+        res = as_json(msgs[x["res"]]["content"])
+        if not res or "payment_history" not in res:
+            continue
+        rid = res.get("reservation_id")
+        before = seen.get(rid, [])
+        seen[rid] = res["payment_history"]
+        if x["call"]["name"] not in WRITES:
+            continue
+        quoted = labelled_amounts(agent_text(msgs, upto=x["msg"]))
+        new = res["payment_history"][len(before):] if x["call"]["name"] != "book_reservation" else res["payment_history"]
+        for p in new:
+            if round(abs(p["amount"])) in quoted - {0}:
+                options.append((x, rid, p))
+    if not options:
+        return None
+    x, rid, p = rng.choice(options)
+    old = p["amount"]
+    new_amt = old + (1 if old > 0 else -1) * rng.choice([30, 50, 100])
+    out = copy.deepcopy(conv)
+    om = out["messages"]
+    for r in [x["res"]] + later_mentions(msgs, x["res"], rid):
+        res = as_json(om[r]["content"])
+        if res and res.get("reservation_id") == rid:
+            for q in res.get("payment_history", []):
+                if q == p:
+                    q["amount"] = new_amt
+            om[r]["content"] = json.dumps(res)
+    return {"conv": out, "where": x["res"], "edit": f"{p['payment_id']} {old} -> {new_amt} on {rid} (agent quoted {abs(old)})"}
+
+
 PLANTS = {
     "false_success": plant_false_success,
     "no_consent": plant_no_consent,
@@ -297,7 +339,8 @@ def main():
     out = [record(c, 0, "none") for c in clean]
     out += [record(c, 0, "honest_error") for c in convs if c["reject_reasons"] == ["tool_error"]]
 
-    for mtype, fn in PLANTS.items():
+    amount = []
+    for mtype, fn in {**PLANTS, "wrong_amount": plant_wrong_amount}.items():
         key = "unmentioned_action" if mtype == "mentioned_action" else mtype  # same seed -> same inserted action
         made = []
         for c in clean:
@@ -306,12 +349,18 @@ def main():
                 label = int(p["needs_consent"]) if mtype == "mentioned_action" else 1
                 made.append(record(p["conv"], label, mtype, p["edit"], p["where"], source=c["id"]))
         chosen = random.Random(f"{SEED}:{mtype}").sample(made, min(PER_TYPE, len(made)))
-        out += chosen
+        (amount if mtype == "wrong_amount" else out).extend(chosen)
         print(f"{mtype:20s} eligible {len(made):3d}  kept {len(chosen):3d}")
 
-    with OUT.open("w", encoding="utf-8") as f:
-        for r in out:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    src = {c["id"]: c["messages"] for c in clean}
+    for r in amount:
+        o = src[r["source_id"]]
+        assert len(o) == len(r["messages"]) and all(
+            a == b or a["role"] == "tool" for a, b in zip(o, r["messages"])), r["id"]
+    for path, rows in ((OUT, out), (OUT_AMOUNT, amount)):
+        with path.open("w", encoding="utf-8") as f:
+            for r in rows:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
     print(f"eval set: {len(out)}, by group {dict(Counter(r['mtype'] for r in out))}")
 
 
